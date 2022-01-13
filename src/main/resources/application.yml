@@ -1,0 +1,15 @@
+server:
+  port: 9096
+spring:
+  application:
+    name: springboot-rmq-receiver
+  rabbitmq:
+    host: rabbitmq-keda-cluster.default.svc.cluster.local
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"      

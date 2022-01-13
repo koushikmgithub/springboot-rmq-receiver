@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-rmq-receiver-deployment
+spec:
+  selector:
+    matchLabels:
+      app: springboot-rmq-receiver
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9096"
+      labels:
+        app: springboot-rmq-receiver
+    spec:
+      containers:
+      - name: springboot-rmq-receiver
+        image: dockertestbaby/springboot-rmq-receiver:1.0
+        ports:
+        - containerPort: 9096
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-rmq-receiver-service
+spec:
+  type: ClusterIP
+  selector:
+    app: springboot-rmq-receiver
+  ports:
+  - port: 9096
